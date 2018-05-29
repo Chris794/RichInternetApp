@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- saved from url=(0116)https://blackboard.iit.edu/bbcswebdav/pid-559025-dt-content-rid-5275370_1/courses/X9102389.201810/lab2_template.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<!-- Modify Title between these comments (Choose correct class number and substitute your username) -->
+	<title>ITMD 565 Lab 2 - crebello - DOM Manipulation</title>
+	<!-- Modify Title between these comments -->
+	<style type="text/css">
+		body {
+			background-color: #ccc;
+			font-family: sans-serif;
+		}
+		label {
+			width: 100px;
+			display: inline-block;
+			margin: 5px 0;
+		}
+		input {
+			display: inline-block;
+			margin: 5px 0;
+		}
+		button {
+			display: inline-block;
+			margin: 20px 10px 20px 0;
+		}
+		#wrapper {
+			background-color: #fff;
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px 40px;
+		}
+		#resultsWrapper .result {
+			border: 4px solid red;
+			padding: 10px;
+			margin: 10px 0;
+		}
+		#resultsWrapper .red {
+			border-color: red;
+		}
+		#resultsWrapper .red h2 {
+			color: red;
+		}
+		#resultsWrapper .green {
+			border-color: green;
+		}
+		#resultsWrapper .green h2 {
+			color: green;
+		}
+		#resultsWrapper .blue {
+			border-color: blue;
+		}
+		#resultsWrapper .blue h2 {
+			color: blue;
+		}
+
+		/* You may add additional CSS below this comment if you feel necessary */
+
+        .red {
+            margin: 4px;
+            padding: 10px;
+            color: red;
+            border: 4px solid red;
+        }
+        .red p {
+            color: black;
+        }
+        .green {
+            margin: 4px;
+            padding: 10px;
+            color: green;
+            border: 4px solid green;
+        }
+        .green p {
+            color: black;
+        }
+        .blue {
+            margin: 4px;
+            padding: 10px;
+            color: blue;
+            border: 4px solid blue;
+        }
+        .blue p {
+            color: black;
+        }
+		
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<!-- Modify headlines between these comments (Choose correct class number and substitute Name and Email) -->
+		<h1>ITMD 565 - Lab 2 - DOM Manipulation</h1>
+		<h2>Clitus D'monte - crebello@hawk.iit.edu</h2>
+		<!-- Modify headlines between these comments -->
+		<label for="bodyInput">Body Text: </label><input id="bodyInput" type="text"><br>
+		<label for="qtyInput">Quantity: </label><input id="qtyInput" type="text"><br>
+		<label for="colorInput">Color: </label>
+		<select id="colorInput">
+			<option value="red">Red</option>
+			<option value="green">Green</option>
+			<option value="blue">Blue</option>
+		</select><br>
+		
+		<button id="runBtn">Run Lab</button>
+		<button id="resetBtn">Reset Lab</button>
+		
+		<h2>Results</h2>
+		<div id="resultsWrapper"></div>
+	</div>
+
+	<script type="text/javascript">
+        // Begin JavaScript Code Here - Do not put JavaScript outside these comments.
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("resetBtn").disabled = true;
+
+            function runBtnClick() {
+
+                var bodyText = document.getElementById("bodyInput").value;
+                var quantity = document.getElementById("qtyInput").value;
+                var color = document.getElementById("colorInput").value;
+
+                if (bodyText != '' && quantity != '') {
+                    if (isNaN(Number(quantity))) {
+                        alert("Value Entered in Quantity field is not a number");
+                    } else {
+                        document.getElementById("resultsWrapper").innerHTML = '';
+                        document.getElementById("resultsWrapper").style.border = "";
+                        document.getElementById("resetBtn").disabled = true;
+
+                        var count = Number(quantity);
+                        for (var i = 1; i <= count; i++) {
+                            var divContainer = document.createElement('div');
+
+                            var contentHeadLine = document.createElement('h2');
+                            var contentHeadText = document.createTextNode("Output " + i);
+                            contentHeadLine.appendChild(contentHeadText);
+                            divContainer.appendChild(contentHeadLine);
+
+                            var contentPara = document.createElement('p');
+                            var contentText = document.createTextNode(bodyText);
+                            contentPara.appendChild(contentText);
+                            divContainer.appendChild(contentPara);
+
+                            if (color == 'red') {
+                                divContainer.className = 'red';
+                            } else if (color == 'green') {
+                                divContainer.className = 'green';
+                            } else if (color == 'blue') {
+                                divContainer.className = 'blue';
+                            }
+
+                            document.getElementById("resultsWrapper").appendChild(divContainer);
+                            document.getElementById("bodyInput").value = '';
+                            document.getElementById("qtyInput").value = '';
+                            document.getElementById("resetBtn").disabled = false;
+
+                        }
+                    }
+                } else {
+                    alert("Body Text or Quantity is empty");
+                }
+            }
+
+            function resetBtnClick() {
+                document.getElementById("bodyInput").value = '';
+                document.getElementById("qtyInput").value = '';
+                document.getElementById("resultsWrapper").innerHTML = '';
+                document.getElementById("resultsWrapper").style.border = "";
+                document.getElementById("resetBtn").disabled = true;
+            }
+
+            document.getElementById("runBtn").addEventListener('click', runBtnClick, false);
+            document.getElementById("resetBtn").addEventListener('click', resetBtnClick, false);
+
+        })
+
+
+        // End JavaScript Code Here - Do not put JavaScript outside these comments.
+	</script>
+
+</body></html>

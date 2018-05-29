@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!-- saved from url=(0116)https://blackboard.iit.edu/bbcswebdav/pid-559025-dt-content-rid-5275370_1/courses/X9102389.201810/lab2_template.html -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Modify Title between these comments (Choose correct class number and substitute your username) -->
+    <title>ITMD 565 Lab 3 - crebello</title>
+    <!-- Modify Title between these comments -->
+    <style type="text/css">
+        body {
+            background-color: #d9d9d9;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        button {
+            text-align: center;
+            display: inline-block;
+            margin: 20px 10px 20px 0;
+            border: 1px solid orangered;
+            height: 20px;
+            width: 80px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:active {
+            box-shadow: 0 2px #666;
+            transform: translateY(2px);
+        }
+
+        #wrapper {
+            border: 1px solid blue;
+            width: 750px;
+            background-color: #f2f2f2;
+            margin: 0 auto;
+            text-align: center;
+            padding: 10px;
+        }
+
+        table, th, td {
+            border: 1px solid;
+            color: black;
+            text-align: left;
+        }
+
+        .true {
+            background-color: green;
+        }
+
+        .false {
+            background-color: red;
+
+        }
+
+        #resultTable tr:nth-child(even) {
+            background-color: #ccccff;
+        }
+
+        #resultTable tr:nth-child(odd) {
+            background-color: #e6ccff;
+        }
+
+        /* You may add additional CSS below this comment if you feel necessary */
+
+    </style>
+</head>
+<body>
+<div id="wrapper">
+    <!-- Modify headlines between these comments (Choose correct class number and substitute Name and Email) -->
+    <h1 align="center">ITMD - 565 - Lab 3</h1>
+    <h2 align="center">Clitus Dmonte - cdmonte@hawk.iit.edu</h2>
+    <!-- Modify headlines between these comments -->
+
+    <button id="loadBtn">Load Data</button>
+    <button id="resetBtn">Reset</button>
+
+    <h2 align="center">Employee List</h2>
+    <div id="resultsWrapper"></div>
+    <table style="width:100%" id="resultTable" class="header">
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Title</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Active</th>
+
+        </tr>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+    // Begin JavaScript Code Here - Do not put JavaScript outside these comments.
+    document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("resetBtn").disabled = true;
+
+        function loadData() {
+            var request = new XMLHttpRequest();
+            request.onreadystatechange = function () {
+                if (request.readyState === 4 && request.status === 200) {
+                    var dataArray = JSON.parse(request.responseText);
+                    for (var i = 0; i < dataArray.length; i++) {
+
+                        document.getElementById('tableBody').innerHTML += ('<tr><td>' + dataArray[i].id + '</td><td>' + dataArray[i].first_name + '</td> <td>' + dataArray[i].last_name + '</td> <td>' + dataArray[i].title + '</td><td><a href=\"mailto:' + dataArray[i].email + '\" target=\"_blank\">' + dataArray[i].email + '</a></td><td>' + dataArray[i].gender + '</td><td  >' + dataArray[i].active + '</td> </tr>');
+                    };
+                    checkActiveStatus();
+                }
+            };
+            request.open('GET', 'http://libertyville.rice.iit.edu/scripts/4565_lab3.php', true);
+            request.send();
+
+            document.getElementById("loadBtn").disabled = true;
+            document.getElementById("resetBtn").disabled = false;
+        }
+
+        function checkActiveStatus() {
+            var tableRecords = document.getElementsByTagName("tr");
+            for (j = 1; j < tableRecords.length; j++) {
+                var rec = tableRecords[j].cells;
+                if (rec[6].innerHTML == 'true') {
+                    rec[6].className = "true";
+                }
+                else {
+                    rec[6].className = "false";
+                }
+            }
+        }
+
+        function resetBtn() {
+            document.getElementById('tableBody').innerHTML = "";
+            document.getElementById("loadBtn").disabled = false;
+            document.getElementById("resetBtn").disabled = true;
+        }
+
+        document.getElementById("loadBtn").addEventListener('click', loadData, false);
+        document.getElementById("resetBtn").addEventListener('click', resetBtn, false);
+    })
+    // End JavaScript Code Here - Do not put JavaScript outside these comments.
+</script>
+</body>
+</html>

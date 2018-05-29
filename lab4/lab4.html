@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!-- saved from url=(0116)https://blackboard.iit.edu/bbcswebdav/pid-569115-dt-content-rid-6585664_1/courses/X9102389.201810/lab4_template.html -->
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>ITMD-4/565 Lab 4 - Canvas Drawing</title>
+    <style type="text/css">
+        #content-wrapper {
+            width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #canvasRun {
+            background-color: #c00;
+            border: 0;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div id="content-wrapper">
+    <button id="canvasRun">Draw Canvas</button>
+    <br><br>
+    <canvas id="myCanvas" width="600" height="450"></canvas>
+</div>
+<script type="text/javascript">
+    // Canvas Drawing Code Here
+
+    var canvas = document.getElementById("myCanvas");
+
+    var var1 = 1.2 * Math.PI;
+    var var2 = 2.0 * Math.PI;
+
+    if (canvas.getContext) {
+        var canvasContext = canvas.getContext("2d");
+        var var3 = 0 * Math.PI;
+        var var4 = 0.25 * Math.PI;
+        document.getElementById("canvasRun").addEventListener("click", function () {
+            setInterval(function drawFrame() {
+                //Changing Background color
+                canvasContext.clearRect(0, 0, 600, 450);
+                canvasContext.save();
+                var gradient = canvasContext.createLinearGradient(0, 0, 0, 500);
+                gradient.addColorStop(0, 'white');
+                gradient.addColorStop(1, 'black');
+                canvasContext.fillStyle = gradient;
+                canvasContext.fillRect(0, 0, 600, 450);
+                // Font for title text
+                canvasContext.textAlign = 'center';
+                canvasContext.font = '32px sans-serif';
+                canvasContext.fillStyle = '#C80000';
+                canvasContext.fillText('ITMD 565 Canvas Lab', 299, 51);
+                //Font for title text
+                canvasContext.textAlign = 'center';
+                canvasContext.fillStyle = 'white';
+                canvasContext.font = '14px sans-serif';
+                canvasContext.fillText('Clitus Dmonte', 104, 392);
+                canvasContext.fillText('cdmonte@hawk.iit.edu', 122, 404);
+
+                canvasContext.beginPath();
+                canvasContext.strokeStyle = '#C80000';
+                canvasContext.lineWidth = 4;
+                canvasContext.moveTo(11, 71);
+                canvasContext.lineTo(591, 71);
+                canvasContext.stroke();
+
+                var image = new Image();
+                image.src = 'IIT_SAT_stack_186_white.png';
+                canvasContext.drawImage(image, 380, 380, 210, 60);
+                //Draw Arc
+                var cone = 0.01 * Math.PI;
+                var ccw = true;
+                canvasContext.beginPath();
+                canvasContext.arc(300, 170, 55, var1, var2, ccw);
+                canvasContext.lineWidth = 18;
+                //Draw line
+                canvasContext.strokeStyle = '#FFA500';
+                canvasContext.stroke();
+                var1 += cone;
+                var2 += cone;
+                //Draw Circle
+                canvasContext.beginPath();
+                canvasContext.fillStyle = '#0000C8';
+                canvasContext.arc(104, 170, 60, 0, 2 * Math.PI, false);
+                canvasContext.fill();
+                canvasContext.lineWidth = 5;
+                canvasContext.strokeStyle = 'white';
+                canvasContext.stroke();
+                //Draw Triangle
+                canvasContext.beginPath();
+                canvasContext.fillStyle = '#00C800';
+                canvasContext.moveTo(155, 360);
+                canvasContext.lineTo(45, 360);
+                canvasContext.lineTo(100, 260);
+                canvasContext.closePath();
+                canvasContext.fill();
+                //Draw Rectangle
+                canvasContext.beginPath();
+                canvasContext.rect(230, 260, 351, 110);
+                canvasContext.fillStyle = 'white';
+                canvasContext.fill();
+                //Draw Quadratic Curve
+                canvasContext.beginPath();
+                canvasContext.setLineDash([18, 12]);
+                canvasContext.moveTo(256, 311);
+                canvasContext.quadraticCurveTo(331, 241, 406, 309);
+                canvasContext.quadraticCurveTo(481, 381, 556, 311);
+                canvasContext.lineWidth = 3;
+                canvasContext.strokeStyle = 'black';
+                canvasContext.stroke();
+                canvasContext.setLineDash([17, 0]);
+                //Draw Rectangle
+                canvasContext.beginPath();
+                canvasContext.lineWidth = 10;
+                canvasContext.strokeStyle = 'white';
+                canvasContext.translate(480, 160);
+                canvasContext.rotate(var3 * Math.PI / 180);
+                canvasContext.translate(-470, -160);
+                canvasContext.rect(410, 100, 118, 118);
+                canvasContext.stroke();
+                var3 += var4;
+                canvasContext.restore();
+                canvasContext.fillStyle = '#C80000';
+                canvasContext.fill();
+                canvasContext.stroke();
+
+            }, 12);
+        });
+    }
+</script>
+</body>
+</html>
